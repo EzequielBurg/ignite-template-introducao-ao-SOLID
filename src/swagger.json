@@ -1,0 +1,171 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SOLID Concepts Documentation",
+    "description": "This is an API using SOLID",
+    "version": "1.0.0",
+    "contact": {
+      "email": "ezekiel_sci@hotmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "user name example",
+                  "email": "user@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          },
+          "400": {
+            "description": "repeated email"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "List users",
+        "description": "List all users",
+        "parameters": {
+          "- in": "path",
+          "name": "user_id",
+          "type": "string"
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "example": [{
+                    "name": "user name example",
+                    "email": "user@example.com",
+                    "admin": "boolean"
+                  }]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "non existing user or non admin user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "invalid user"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:user_id/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Turn user admin",
+        "description": "Turn an user an admin",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "name": "user name example",
+                    "email": "user@example.com",
+                    "amdin": true
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "non existing user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "user not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:user_id": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user",
+        "description": "Show an user",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "name": "user name example",
+                    "email": "user@example.com",
+                    "admin": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "non existing user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "user not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
